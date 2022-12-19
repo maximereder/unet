@@ -1,0 +1,7 @@
+.DS_Store
+data/train
+data/test
+logs
+new_data
+output
+results
