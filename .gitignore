@@ -1,6 +1,6 @@
 .DS_Store
 data/train
-data/test
+data/valid
 data/.DS_Store
 logs
 new_data
