@@ -1,6 +1,7 @@
 .DS_Store
 data/train
 data/test
+data/.DS_Store
 logs
 new_data
 output
