@@ -22,7 +22,6 @@ parser.add_argument("-b", "--batch-size", dest="batch_size", help="Batch size fo
 parser.add_argument("-ime", "--img_ext", dest="img_ext", help="Image extension.", default='.jpg')
 parser.add_argument("-mae", "--mask_ext", dest="mask_ext", help="Masks extension.", default='.png')
 parser.add_argument("-is", "--imgsz", dest="imgsz", help="Image size for inference.", default=[304, 3072])
-parser.add_argument("-d", "--device", dest="device", help="Device : 'cpu' or 'mps' for M1&M2 or 1 ... n for gpus", default='cpu')
 args = parser.parse_args()
 
 H = args.imgsz[0]
@@ -78,7 +77,7 @@ def tf_dataset(X, Y, batch_size=2):
 
 if __name__ == "__main__":
     """ GPU """
-    gpus = tf.config.list_physical_devices('GPU')
+    """gpus = tf.config.list_physical_devices('GPU')
     if gpus:
       try:
         # Currently, memory growth needs to be the same across GPUs
@@ -88,7 +87,7 @@ if __name__ == "__main__":
         print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
       except RuntimeError as e:
         # Memory growth must be set before GPUs have been initialized
-        print(e)
+        print(e)"""
 
     """ Seeding """
     np.random.seed(42)
@@ -100,14 +99,14 @@ if __name__ == "__main__":
     """ Hyperparameters """
     batch_size = int(args.batch_size)
     lr = 1e-4
-    num_epochs = args.epochs
+    num_epochs = int(args.epochs)
     model_path = os.path.join("output", args.model)
     csv_path = os.path.join("output", args.csv_output)
 
     """ Dataset """
-    dataset_path = "data"
+    dataset_path = args.data
     train_path = os.path.join(dataset_path, "train")
-    valid_path = os.path.join(dataset_path, "test")
+    valid_path = os.path.join(dataset_path, "valid")
 
     train_x, train_y = load_data(train_path)
     train_x, train_y = shuffling(train_x, train_y)
@@ -133,7 +132,7 @@ if __name__ == "__main__":
     #model.summary()
 
     callbacks = [
-        ModelCheckpoint(model_path, verbose=1, save_best_only=True),
+        ModelCheckpoint(model_path, verbose=1, save_best_only=True, save_freq='epoch'),
         ReduceLROnPlateau(monitor="val_loss", factor=0.1, patience=5, min_lr=1e-6, verbose=1),
         CSVLogger(csv_path),
         TensorBoard(),
