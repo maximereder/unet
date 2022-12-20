@@ -12,7 +12,6 @@ import argparse
 from model import build_unet
 from metrics import dice_loss, dice_coef, iou
 
-
 parser = argparse.ArgumentParser()
 parser.add_argument("-da", "--data", dest="data", help="Data folder name.", default='data')
 parser.add_argument("-o", "--csv", dest="csv_output", help="CSV to output name.", default='results_unet_train.csv')
@@ -50,11 +49,11 @@ def read_image(path):
 
 def read_mask(path):
     path = path.decode()
-    x = cv2.imread(path, cv2.IMREAD_GRAYSCALE)  ## (512, 512)
+    x = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
     x = cv2.resize(x, (W, H))
     x = x/255.0
     x = x.astype(np.float32)
-    x = np.expand_dims(x, axis=-1)              ## (512, 512, 1)
+    x = np.expand_dims(x, axis=-1)
     return x
 
 def tf_parse(x, y):
@@ -76,19 +75,6 @@ def tf_dataset(X, Y, batch_size=2):
     return dataset
 
 if __name__ == "__main__":
-    """ GPU """
-    """gpus = tf.config.list_physical_devices('GPU')
-    if gpus:
-      try:
-        # Currently, memory growth needs to be the same across GPUs
-        for gpu in gpus:
-          tf.config.experimental.set_memory_growth(gpu, True)
-        logical_gpus = tf.config.list_logical_devices('GPU')
-        print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
-      except RuntimeError as e:
-        # Memory growth must be set before GPUs have been initialized
-        print(e)"""
-
     """ Seeding """
     np.random.seed(42)
     tf.random.set_seed(42)
@@ -129,7 +115,6 @@ if __name__ == "__main__":
     """ Model """
     model = build_unet((H, W, 3))
     model.compile(loss=dice_loss, optimizer=Adam(lr), metrics=[dice_coef, iou, Recall(), Precision()])
-    #model.summary()
 
     callbacks = [
         ModelCheckpoint(model_path, verbose=1, save_best_only=True, save_freq='epoch'),
