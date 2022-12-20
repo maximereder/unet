@@ -8,7 +8,7 @@ Requirements
 - sklearn
 - argparse
 
-Usage
+## Usage
 To train the model, run the following command:
 
 ```python train.py```
