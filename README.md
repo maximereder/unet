@@ -31,6 +31,34 @@ You can also specify the following arguments:
 ## Architecture
 The model use a U-Net architecture with the following structure:
 
+```
+- Input layer: (304, 3072, 3)
+- Convolutional layer 1: 32 filters, kernel size 3x3, stride 1, padding 1
+- Convolutional layer 2: 32 filters, kernel size 3x3, stride 1, padding 1
+- Max pooling layer: kernel size 2x2, stride 2
+- Convolutional layer 3: 64 filters, kernel size 3x3, stride 1, padding 1
+- Convolutional layer 4: 64 filters, kernel size 3x3, stride 1, padding 1
+- Max pooling layer: kernel size 2x2, stride 2
+- Convolutional layer 5: 128 filters, kernel size 3x3, stride 1, padding 1
+- Convolutional layer 6: 128 filters, kernel size 3x3, stride 1, padding 1
+- Max pooling layer: kernel size 2x2, stride 2
+- Convolutional layer 7: 256 filters, kernel size 3x3, stride 1, padding 1
+- Convolutional layer 8: 256 filters, kernel size 3x3, stride 1, padding 1
+- Max pooling layer: kernel size 2x2, stride 2
+- Convolutional layer 9: 512 filters, kernel size 3x3, stride 1, padding 1
+- Convolutional layer 10: 512 filters, kernel size 3x3, stride 1, padding 1
+- Max pooling layer: kernel size 2x2, stride 2
+- Convolutional layer 11: 1024 filters, kernel size 3x3, stride 1, padding 1
+- Convolutional layer 12: 1024 filters, kernel size 3x3, stride 1, padding 1
+- Up sampling layer: size 2x2, stride 2
+- Concatenation layer
+- Convolutional layer 13: 512 filters, kernel size 3x3, stride 1, padding 1
+- Convolutional layer 14: 512 filters, kernel size 3x3, stride 1, padding 1
+- Up sampling layer: size 2x2, stride 2
+- Concatenation layer
+- Convolutional layer 15: 256 filters, kernel size 3x3, stride 1, padding 1
+- Convolutional layer 16: 256 filters, kernel size 3x3, stride 1, padding
+```
 ![](https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/u-net-architecture.png)
 
 ```
