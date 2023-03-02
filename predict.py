@@ -23,7 +23,7 @@ W = int(args.imgsz[1])
 def create_dir(path):
     """Creates a directory if it does not exist.
 
-    Args:
+    Args:   
         path (str): Path to the directory to create.
     """
     if not os.path.exists(path):
